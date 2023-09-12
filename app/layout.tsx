@@ -7,6 +7,8 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Tiked',
+  description: 'Tiked is a free, open-source Tiktok video downloader.',
+  keywords: 'tiked, open-source, free, tiktok, ad-free',
 }
 
 export default function RootLayout({
