@@ -3,16 +3,15 @@ import { Box, Flex, IconButton, Input, InputGroup, InputRightAddon, Text, useToa
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import React from "react";
 import { DLResult } from '@tobyg74/tiktok-api-dl/lib/types/index'
-import useDownloader from 'react-use-downloader'
 
 export default function Home() {
   const [data, setData] = React.useState<DLResult | null>(null);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
-
+  const cancelRef = React.useRef<any>()
   const inputRef = React.createRef<HTMLInputElement>();
   const toast = useToast();
-  const { download } = useDownloader();
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const URL = inputRef.current!.value;
@@ -71,7 +70,7 @@ export default function Home() {
         </Box>
       </Flex>
       <Box>
-        <AlertDialog isOpen={isOpen} onClose={onClose} size={"3xl"}>
+        <AlertDialog isOpen={isOpen} onClose={onClose} size={"3xl"} leastDestructiveRef={cancelRef}>
           <AlertDialogOverlay>
             <AlertDialogContent>
               <AlertDialogHeader fontSize={"2xl"} fontWeight={"bold"} textAlign={"center"}>
@@ -82,12 +81,12 @@ export default function Home() {
                 {data && data?.result?.type == "video" && (
                   <>
                     <Flex gap={3}>
-                      <Image src={data?.result?.cover} alt={data?.result?.id} w={"30%"} />
+                      <Image src={String(data?.result?.cover)} alt={String(data?.result?.id)} w={"30%"} />
                       <Box>
                         <Text>
                           {data?.result?.description}
                         </Text>
-                        <Link href={data?.result.video} download target="_blank">
+                        <Link href={String(data?.result.video)} download target="_blank">
                           <Button colorScheme="teal" mt={7} w="full">Download</Button>
                         </Link>
                       </Box>
