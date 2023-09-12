@@ -5,7 +5,9 @@ export async function POST(request: NextRequest) {
     const { URL } = await request.json()
 
     if(URL) {
-        return new Response(JSON.stringify(await TiktokDL(URL)));
+        const result = await TiktokDL(URL)
+        
+        return new Response(JSON.stringify(result));
     }
 
     return new Response(JSON.stringify({ error: "No video URL provided" }));
