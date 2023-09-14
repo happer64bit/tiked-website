@@ -5,8 +5,8 @@ export async function POST(request: NextRequest) {
     const { URL } = await request.json()
 
     if(URL) {
-        const result = await TiktokDL(URL)
-        
+        const result = await TiktokDL(URL).catch((err) => console.error(err))
+
         return new Response(JSON.stringify(result));
     }
 
